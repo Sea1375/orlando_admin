@@ -541,12 +541,12 @@ margin: 0;
    ?>
 
    <?php 
-    $theme_parks_query = "SELECT * FROM theme_parks where active = 1";
+    $theme_parks_query = "SELECT * FROM theme_parks where active = 1 ORDER BY code DESC";
     $theme_parks_result = mysqli_query($db, $theme_parks_query);
     $theme_parks = [];
 
     while($theme_park = mysqli_fetch_assoc($theme_parks_result)) {
-      array_push($theme_parks, array('id' => $theme_park['id'], 'name' => $theme_park['name']));
+      array_push($theme_parks, array('id' => $theme_park['id'], 'name' => $theme_park['name'], 'code' => $theme_park['code']));
     }
 
    ?>
@@ -746,7 +746,7 @@ margin: 0;
 
         ?>
 
-        <option value="<?=$theme_park['id']?>"><?=$theme_park['name']?></option>
+        <option value="<?=$theme_park['id']?>"><?=$theme_park['name']." (".$theme_park['code'].")"?></option>
 
       <?php
         }

@@ -24,7 +24,8 @@
 
          if(isset($_POST['submitticket']))
 
-           {   $name_on_ticket =$_POST['name_on_ticket'];
+           {   
+             $name_on_ticket =$_POST['name_on_ticket'];
 
                $ticketpass=$_POST['ticketpass'];
 
@@ -50,7 +51,7 @@
 
                      $price=$_POST['price'];
 
-                     $theme_park_id=$_POST['theme_park_id'];
+                     $theme_park_parent_id=$_POST['theme_park_parent_id'];
 
                      $expire_date=$_POST['date'];
 
@@ -86,12 +87,10 @@
 
               
 
-               $ticket_insert = "INSERT INTO ticket(`name_on_ticket`,`ticket_type`,`type`,`gender`,purchased_place,cost,ticketshowid,expire_date,node,broker,batch_number,set_link,entitlement,trans_number,print_date,active,theme_park_id)
+               $ticket_insert = "INSERT INTO ticket(`name_on_ticket`,`ticket_type`,`type`,`gender`,purchased_place,cost,ticketshowid,expire_date,node,broker,batch_number,set_link,entitlement,trans_number,print_date,active,theme_park_parent_id)
 
-              VALUES ('$name_on_ticket','$ticketpass','$type', '$gender','$purchase_place','$price','$ticketshowid','$expire_date','$node','$broker','$batchnumber','$set','$entitlement','$trans_no','$print_date','$active', $theme_park_id)";
-
+              VALUES ('$name_on_ticket','$ticketpass','$type', '$gender','$purchase_place','$price','$ticketshowid','$expire_date','$node','$broker','$batchnumber','$set','$entitlement','$trans_no','$print_date','$active', $theme_park_parent_id)";
                 
-
                 $result = mysqli_query($db,$ticket_insert);
 
                  if($result=='true')
@@ -119,8 +118,8 @@
                 ?>
 
 <?php 
-  $theme_parks_query = "SELECT * FROM theme_parks where active = 1";
-  $theme_parks = mysqli_query($db, $theme_parks_query);
+  $theme_park_parents_query = "SELECT * FROM theme_park_parents ORDER BY code DESC";
+  $theme_park_parents = mysqli_query($db, $theme_park_parents_query);
 ?>
 
 
@@ -451,7 +450,7 @@
 
        <div class="right-col">
 
-       <input type="text" class="form-control" required name="entitlement" id="entitlement" aria-describedby="entitlement" placeholder="Ticket Print *">
+       <input type="text" class="form-control" name="entitlement" id="entitlement" aria-describedby="entitlement" placeholder="Ticket Print">
 
        </div>
 
@@ -609,16 +608,17 @@
 
      <div class="right-col">
 
-     <select class="form-control" name="theme_park_id">
+     <select class="form-control" name="theme_park_parent_id">
 
      <?php
 
-      while($theme_park = mysqli_fetch_assoc($theme_parks)) {
-        $tp_name=$theme_park['name'];
-        $tp_id = $theme_park['id']
+      while($theme_park_parent = mysqli_fetch_assoc($theme_park_parents)) {
+        $tpp_name=$theme_park_parent['name'];
+        $tpp_id = $theme_park_parent['id'];
+        $tpp_code = $theme_park_parent['code'];
       ?>
 
-      <option value="<?=$tp_id?>"><?=$tp_name?></option>
+      <option value="<?=$tpp_id?>"><?=$tpp_name?></option>
 
       <?php
       }

@@ -51,7 +51,7 @@
 ?>
 
 <?php 
-  $theme_parks_query = "SELECT * FROM theme_parks where active = 1";
+  $theme_parks_query = "SELECT * FROM theme_parks where active = 1 ORDER BY code DESC";
   $theme_parks = mysqli_query($db, $theme_parks_query);
 ?>
 
@@ -129,10 +129,12 @@
 
       while($theme_park = mysqli_fetch_assoc($theme_parks)) {
         $tp_name=$theme_park['name'];
-        $tp_id = $theme_park['id']
+        $tp_id = $theme_park['id'];
+        $tp_code = $theme_park['code'];
       ?>
 
-      <option value="<?=$tp_id?>"><?=$tp_name?></option>
+      <option value="<?=$tp_id?>"><?=$tp_name." (".$tp_code.")"?></option>
+
 
       <?php
       }

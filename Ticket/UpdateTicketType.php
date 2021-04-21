@@ -85,7 +85,7 @@ include('../includes/header.php');
 ?>
 
 <?php 
-  $theme_parks_query = "SELECT * FROM theme_parks where active = 1";
+  $theme_parks_query = "SELECT * FROM theme_parks where active = 1 ORDER BY code DESC";
   $theme_parks = mysqli_query($db, $theme_parks_query);
 ?>
 
@@ -187,17 +187,15 @@ include('../includes/header.php');
 
       while($theme_park = mysqli_fetch_assoc($theme_parks)) {
         $tp_name=$theme_park['name'];
-        $tp_id = $theme_park['id']
+        $tp_id = $theme_park['id'];
+        $tp_code = $theme_park['code'];
       ?>
 
-      <option value="<?=$tp_id?>" <?php if ($tp_id == $user['theme_park_id']) echo 'selected';?>><?=$tp_name?></option>
+      <option value="<?=$tp_id?>" <?php if ($tp_id == $user['theme_park_id']) echo 'selected';?>><?=$tp_name." (".$tp_code.")"?></option>
 
       <?php
       }
       ?>   
-
-    
-
   </select><br>
 
 <label for="place">Active *</label> 
